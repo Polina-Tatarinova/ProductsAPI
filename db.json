@@ -1,0 +1,30 @@
+{
+  "product": [
+    {
+      "id": "1",
+      "name": "Ноутбук",
+      "price": 55000,
+      "stock": 4
+    },
+    {
+      "id": "2",
+      "name": "Смартфон",
+      "price": 35000,
+      "stock": 8
+    },
+    {
+      "id": "3",
+      "name": "Наушники",
+      "price": 2500,
+      "stock": 30
+    },
+    {
+      "id": "4",
+      "name": "Клавиатура",
+      "price": 4200,
+      "stock": 14
+    }
+  ],
+  "cart": [],
+  "$schema": "./node_modules/json-server/schema.json"
+}
