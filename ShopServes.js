@@ -1,7 +1,7 @@
-class ShopServes {
+export default class ShopServes {
   static BASE_URL = "http://localhost:3000";
 
-  static async getProduct() {
+  static async getProducts() {
     return fetch(this.BASE_URL + `/product`).then((res) => {
       if (!res.ok) {
         throw "Не удалось получить товары";
@@ -10,7 +10,7 @@ class ShopServes {
     });
   }
 
-  static async buyProduct(id) {
+  static async buyProducts(id) {
     return fetch(this.BASE_URL + `/product/${id}/purchase`, {
       method: "PATCH",
       headers: {
@@ -27,7 +27,7 @@ class ShopServes {
     });
   }
 
-  static async administratorRights() {
+  static async getAdministratorRights() {
     return fetch(this.BASE_URL + `/adminPanel`).then((res) => {
       if (!res.ok) {
         throw "Не удалось получить доступ к правам администратора";
@@ -36,7 +36,7 @@ class ShopServes {
     });
   }
 
-  static async productModification(id) {
+  static async changeProduct(id) {
     return fetch(this.BASE_URL + `/product/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -49,7 +49,7 @@ class ShopServes {
     });
   }
 
-  static async deletingProduct(id) {
+  static async deletProduct(id) {
     return fetch(this.BASE_URL + `/product/${id}`, { method: "DELETE" }).then(
       (res) => {
         if (!res.ok) {
@@ -60,7 +60,7 @@ class ShopServes {
     );
   }
 
-  static async creatingNewProduct() {
+  static async creatNewProduct() {
     return fetch(this.BASE_URL + `/product`, {
       method: "POST",
       headers: {
@@ -75,5 +75,3 @@ class ShopServes {
     });
   }
 }
-
-export { ShopServes }
