@@ -1,1 +1,3 @@
-import { ServerShop } from "./classServerShop";
+import { ShopServes } from "./ShopServes";
+
+console.log(getProduct());
