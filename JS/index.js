@@ -1,5 +1,5 @@
 import ShopService from "./ShopService.js";
-import UIRenderer from "./render.js";
+import UIRenderer from "./UIRenderer.js";
 
 const ui = new UIRenderer();
 ui.render();

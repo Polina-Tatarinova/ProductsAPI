@@ -1,0 +1,7 @@
+.admin__button {
+  border: 1px solid rgb(0, 116, 116);
+  background-color: aqua;
+  font-weight: 400;
+  padding: 5px;
+  cursor: pointer;
+}

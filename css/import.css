@@ -1,0 +1,10 @@
+@import url("./body/body.css");
+@import url("./productsList/productsList.css");
+@import url("./admin/__button/admin__button.css");
+@import url("./admin/__password/admin__password.css");
+@import url("./product/product.css");
+@import url("./product/__name/product__name.css");
+@import url("./product/__image/product__image.css");
+@import url("./product/__specs/product__specs.css");
+@import url("./product/__button/product__button.css");
+@import url("./product/__text/product__text.css");

@@ -3,29 +3,37 @@
   <head>
     <meta charset="UTF-8" />
     <title>Интернет-магазин (fetch)</title>
-    <script src="./index.js" type="module"></script>
-    <link rel="stylesheet" href="./index.css" />
+    <script src="./JS/index.js" type="module"></script>
+    <link rel="stylesheet" href="./css/import.css" />
   </head>
-  <body>
+  <body class="body">
     <h1>Интернет-магазин</h1>
-    <button class="administrator__rights">Права администратора</button>
-    <div id="message"></div>
+
+    <div class="admin">
+      <input
+        class="admin__password"
+        type="password"
+        placeholder="Введите пароль"
+        required
+      />
+      <button class="admin__button">Права администратора</button>
+    </div>
 
     <h2>Товары</h2>
-    <div id="products__containers">Загрузка товаров...</div>
+    <div id="products-list" class="productsList">Сервер не доступен</div>
 
-    <template class="product__container">
-      <div class="content_wrapper">
+    <template id="product-template">
+      <div class="product">
         <h3 class="product__name"></h3>
-        <img class="product__picture" src="" alt="" />
-        <ul class="product__specifications">
-          <li class="product__price"></li>
-          <li class="product__description"></li>
-          <li class="product__category"></li>
-          <li class="product__stock"></li>
-          <li class="product__rating"></li>
+        <img class="product__image" src="" alt="" />
+        <ul class="product__specs">
+          <li class="product__price"><span class="product__text">Цена: </span></li>
+          <li class="product__description"><span class="product__text">Характеристикa: </span></li>
+          <li class="product__category"><span class="product__text">Категория: </span></li>
+          <li class="product__stock"><span class="product__text">Остаток на складе: </span></li>
+          <li class="product__rating"><span class="product__text">Рейтинг: </span></li>
         </ul>
-        <button class="product__buy">Купить</button>
+        <button class="product__button">Купить</button>
       </div>
     </template>
   </body>
