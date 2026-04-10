@@ -1,27 +1,32 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Интернет-магазин (fetch)</title>
     <script src="./index.js" type="module"></script>
-</head>
-<body>
+    <link rel="stylesheet" href="./index.css" />
+  </head>
+  <body>
     <h1>Интернет-магазин</h1>
-<div id="message" ></div>
+    <button class="administrator__rights">Права администратора</button>
+    <div id="message"></div>
 
-<h2>Товары</h2>
-<div id="products-container">Загрузка товаров...</div>
+    <h2>Товары</h2>
+    <div id="products__containers">Загрузка товаров...</div>
 
-<h2>Корзина</h2>
-<div id="cart-container">Корзина пуста</div>
-<div id="cart-total"></div>
-<button id="clear-cart-btn">Очистить корзину</button>
-<button id="checkout-btn">Оформить заказ</button>
-
-<h2>История заказов</h2>
-<div id="orders-container">Нет оформленных заказов</div>
-<button id="clear-history-btn">Очистить историю заказов</button>
-</body>
+    <template class="product__container">
+      <div class="content_wrapper">
+        <h3 class="product__name"></h3>
+        <img class="product__picture" src="" alt="" />
+        <ul class="product__specifications">
+          <li class="product__price"></li>
+          <li class="product__description"></li>
+          <li class="product__category"></li>
+          <li class="product__stock"></li>
+          <li class="product__rating"></li>
+        </ul>
+        <button class="product__buy">Купить</button>
+      </div>
+    </template>
+  </body>
 </html>
-
-

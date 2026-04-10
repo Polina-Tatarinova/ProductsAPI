@@ -1,4 +1,4 @@
-export default class ShopServes {
+export default class ShopService {
   static BASE_URL = "http://localhost:3000";
 
   static async getProducts() {
@@ -10,37 +10,33 @@ export default class ShopServes {
     });
   }
 
-  static async buyProducts(id) {
+  static async buyProduct(id) {
     return fetch(this.BASE_URL + `/product/${id}/purchase`, {
       method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        title: "Partially Updated Title",
-      }),
     }).then((res) => {
       if (!res.ok) {
-        throw "Не удалось купить";
+        throw "Товар не найден";
       }
       return res.json();
     });
   }
 
-  static async getAdministratorRights() {
-    return fetch(this.BASE_URL + `/adminPanel`).then((res) => {
+  static async checkAdministratorRights(token) {
+    return fetch(this.BASE_URL + `/adminPanel`, {
+      headers: { token },
+    }).then((res) => {
       if (!res.ok) {
         throw "Не удалось получить доступ к правам администратора";
       }
-      return res.json();
+      return res.text();
     });
   }
 
-  static async changeProduct(id) {
+  static async changeProduct(id, body) {
     return fetch(this.BASE_URL + `/product/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(),
+      body: JSON.stringify(body),
     }).then((response) => {
       if (!response.ok) {
         throw "Не удалось изменить товар";
@@ -49,7 +45,7 @@ export default class ShopServes {
     });
   }
 
-  static async deletProduct(id) {
+  static async deleteProduct(id) {
     return fetch(this.BASE_URL + `/product/${id}`, { method: "DELETE" }).then(
       (res) => {
         if (!res.ok) {
@@ -60,7 +56,7 @@ export default class ShopServes {
     );
   }
 
-  static async creatNewProduct() {
+  static async createNewProduct(newProduct) {
     return fetch(this.BASE_URL + `/product`, {
       method: "POST",
       headers: {
@@ -75,3 +71,4 @@ export default class ShopServes {
     });
   }
 }
+//юай рэндер -отвечает за отрисовку//рендер//парсить//локал сторeдж //UIRenderer 
