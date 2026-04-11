@@ -1,7 +1,8 @@
 import ShopService from "./ShopService.js";
 
 export default class UIRenderer {
-  
+  #isAdminFlag = false;
+
   #getImageUrl(imageUrl) {
     return imageUrl.startsWith("/")
       ? `${ShopService.BASE_URL}${imageUrl}`
@@ -40,71 +41,53 @@ export default class UIRenderer {
         res.forEach((product) => {
           const templateCardProduct = template.content.cloneNode(true);
           this.#contentCard(templateCardProduct, product);
-          const buyButton =
-            templateCardProduct.querySelector(".product__button");
-          buyButton.dataset.id = product.id;
-
-          buyButton.addEventListener("click", () => {
-            const id = buyButton.dataset.id;
-            ShopService.buyProduct(id)
-              .then(() => {
-                const productCardWrapper = buyButton.closest(".product");
-                if (productCardWrapper) {
-                  productCardWrapper.remove();
-                }
-              })
-              .catch((err) => {
-                console.error(err);
+          const adminButton = document.querySelector(".admin__button");
+          const passwordInput = document.querySelector(".admin__password");
+          const buyButton = templateCardProduct.querySelector(".product__button");
+          if(!this.#isAdminFlag){
+              if (buyButton) {
+                buyButton.remove()
+              }
+              const adminBtnEdit = document.createElement('button')
+              adminBtnEdit.textContent = 'Редактировать'
+              adminBtnEdit.classList.add("product__buttonEdit");
+              adminBtnEdit.dataset.id = product.id;
+              adminBtnEdit.addEventListener("click", () => {
+                console.log(`Редактирование товара ${product.id}`);
+                ShopService.changeProduct();
               });
-          });
+              const adminBtnDelete = document.createElement("button");
+              adminBtnDelete.textContent = "Удалить";
+              adminBtnDelete.classList.add("product__buttonDelete");
+              adminBtnDelete.dataset.id = product.id;
+              adminBtnDelete.addEventListener("click", () => {
+                console.log(`Удаление товара ${product.id}`);
+              });
 
-          productsContainer.appendChild(templateCardProduct);
+          productsContainer.appendChild(adminBtnEdit); 
+          productsContainer.appendChild(adminBtnDelete);
+          } else if (this.#isAdminFlag) {
+            buyButton.dataset.id = product.id;
+            buyButton.addEventListener("click", () => {
+              const id = buyButton.dataset.id;
+              ShopService.buyProduct(id)
+                .then(() => {
+                  const productCardWrapper = buyButton.closest(".product");
+                  if (productCardWrapper) {
+                    productCardWrapper.remove();
+                  }
+                })
+                .catch((err) => {
+                  console.error(err);
+                });
+            });
+            productsContainer.appendChild(templateCardProduct);
+          }
+          
         });
       })
       .catch((err) => {
         console.error(err);
       });
-  }
-
-  renderAdmin() {
-    ShopService.getProducts()
-      .then((res) => {
-        const productsContainer = document.querySelector("#products-list");
-        productsContainer.innerHTML = "";
-        const template = document.querySelector("#product-template");
-        res.forEach((product) => {
-          const cardAdmin = template.content.cloneNode(true);
-          this.#contentCard(cardAdmin, product);
-          const buyBtn = cardAdmin.querySelector(".product__button");
-          if (buyBtn) buyBtn.remove();
-          const adminDiv = document.createElement("div");
-          adminDiv.className = "product__adminButtons";
-          const editBtn = document.createElement("button");
-          editBtn.textContent = "Редактировать";
-          editBtn.classList.add("product__editBtn");
-          editBtn.dataset.id = product.id;
-          editBtn.addEventListener("click", () => {
-            alert(`Редактирование товара ${product.id}`); //сюда вставить переход на страницу редактирования товара
-          });
-          const deleteBtn = document.createElement("button");
-          deleteBtn.textContent = "Удалить";
-          deleteBtn.classList.add("product__deleteBtn");
-          deleteBtn.dataset.id = product.id;
-          deleteBtn.addEventListener("click", () => {
-            alert(`Удаление товара ${product.id}`);
-          });
-          adminDiv.appendChild(editBtn);
-          adminDiv.appendChild(deleteBtn);
-          cardAdmin.querySelector(".product").appendChild(adminDiv);
-          productsContainer.appendChild(cardAdmin);
-        });
-        const adminBtn = document.querySelector(".admin__button");
-        if (adminBtn) {
-          adminBtn.textContent = "Версия для пользователя";
-        }
-        const passwordInput = document.querySelector(".admin__password");
-        if (passwordInput) passwordInput.remove();
-      })
-      .catch((err) => console.error(err));
   }
 }
