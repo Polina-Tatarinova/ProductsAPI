@@ -4,6 +4,7 @@ import UIRenderer from "./UIRenderer.js";
 const ui = new UIRenderer();
 ui.render();
 
+
 // ShopService.getProducts().then(res=>{
 //     console.log(res)
 // });//работает
