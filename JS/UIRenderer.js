@@ -41,32 +41,35 @@ export default class UIRenderer {
         res.forEach((product) => {
           const templateCardProduct = template.content.cloneNode(true);
           this.#contentCard(templateCardProduct, product);
-          const adminButton = document.querySelector(".admin__button");
-          const passwordInput = document.querySelector(".admin__password");
-          const buyButton = templateCardProduct.querySelector(".product__button");
-          if(!this.#isAdminFlag){
-              if (buyButton) {
-                buyButton.remove()
-              }
-              const adminBtnEdit = document.createElement('button')
-              adminBtnEdit.textContent = 'Редактировать'
-              adminBtnEdit.classList.add("product__buttonEdit");
-              adminBtnEdit.dataset.id = product.id;
-              adminBtnEdit.addEventListener("click", () => {
-                console.log(`Редактирование товара ${product.id}`);
-                ShopService.changeProduct();
-              });
-              const adminBtnDelete = document.createElement("button");
-              adminBtnDelete.textContent = "Удалить";
-              adminBtnDelete.classList.add("product__buttonDelete");
-              adminBtnDelete.dataset.id = product.id;
-              adminBtnDelete.addEventListener("click", () => {
-                console.log(`Удаление товара ${product.id}`);
-              });
 
-          productsContainer.appendChild(adminBtnEdit); 
-          productsContainer.appendChild(adminBtnDelete);
-          } else if (this.#isAdminFlag) {
+          const buyButton =
+            templateCardProduct.querySelector(".product__button");
+          if (this.#isAdminFlag) {
+            if (buyButton) {
+              buyButton.remove();
+            }
+            const adminBtnEdit = document.createElement("button");
+            adminBtnEdit.textContent = "Редактировать";
+            adminBtnEdit.classList.add("product__buttonEdit");
+            adminBtnEdit.dataset.id = product.id;
+            adminBtnEdit.addEventListener("click", () => {
+              console.log(`Редактирование товара ${product.id}`);
+              window.location.href = "../indexEdit.html";
+            });
+            const adminBtnDelete = document.createElement("button");
+            adminBtnDelete.textContent = "Удалить";
+            adminBtnDelete.classList.add("product__buttonDelete");
+            adminBtnDelete.dataset.id = product.id;
+            adminBtnDelete.addEventListener("click", () => {
+              console.log(`Удаление товара ${product.id}`);
+            });
+
+            templateCardProduct.querySelector(".product").append(adminBtnEdit);
+            templateCardProduct
+              .querySelector(".product")
+              .append(adminBtnDelete);
+            productsContainer.appendChild(templateCardProduct);
+          } else {
             buyButton.dataset.id = product.id;
             buyButton.addEventListener("click", () => {
               const id = buyButton.dataset.id;
@@ -83,9 +86,38 @@ export default class UIRenderer {
             });
             productsContainer.appendChild(templateCardProduct);
           }
-          
+        });
+        const adminButton = document.querySelector(".admin__button");
+        const passwordInput = document.querySelector(".admin__password");
+        
+        adminButton.addEventListener("click", () => {
+          if (this.#isAdminFlag) {
+            this.#isAdminFlag = false;
+            this.render();
+            passwordInput.style.display = "";
+            adminButton.textContent = "Права администратора";
+          } else {
+            const token = 12345;
+            if (passwordInput.value == token) {
+              console.log("вход в админ панель");
+              ShopService.checkAdministratorRights(token)
+                .then((res) => {
+                  console.log(res);
+                  this.#isAdminFlag = true;
+                  this.render();
+                  passwordInput.style.display = "none";
+                  adminButton.textContent = "Вернуться в режим пользователя";
+                })
+                .catch((err) => {
+                  console.error(err);
+                });
+            } else {
+              console.log("Пароль не верен");
+            }
+          }
         });
       })
+
       .catch((err) => {
         console.error(err);
       });
