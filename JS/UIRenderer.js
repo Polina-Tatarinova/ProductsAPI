@@ -1,6 +1,43 @@
 import ShopService from "./ShopService.js";
 
 export default class UIRenderer {
+
+constructor(){
+  this.#initIsAminLictener()
+}
+  #initIsAminLictener(){
+       const adminButton = document.querySelector(".admin__button");
+        const passwordInput = document.querySelector(".admin__password");
+        
+        adminButton.addEventListener("click", () => {
+          if (this.#isAdminFlag) {
+            this.#isAdminFlag = false;
+            this.render();
+            passwordInput.style.display = "";
+            passwordInput.value = "";
+            adminButton.textContent = "Права администратора";
+          } else {
+            const token = 12345;
+            if (passwordInput.value == token) {
+              console.log("вход в админ панель");
+              ShopService.checkAdministratorRights(token)
+                .then((res) => {
+                  console.log(res);
+                  this.#isAdminFlag = true;
+                  this.render();
+                  passwordInput.style.display = "none";
+                  adminButton.textContent = "Вернуться в режим пользователя";
+                })
+                .catch((err) => {
+                  console.error(err);
+                });
+            } else {
+              alert("Пароль не верен");
+              passwordInput.value = "";
+            }
+          }
+        });
+  }
   #isAdminFlag = false;
 
   #getImageUrl(imageUrl) {
@@ -54,7 +91,7 @@ export default class UIRenderer {
             adminBtnEdit.dataset.id = product.id;
             adminBtnEdit.addEventListener("click", () => {
               console.log(`Редактирование товара ${product.id}`);
-              window.location.href = "../indexEdit.html";
+              window.location.href = "../indexEdit.html?id=${product.id}";
             });
             const adminBtnDelete = document.createElement("button");
             adminBtnDelete.textContent = "Удалить";
@@ -87,37 +124,7 @@ export default class UIRenderer {
             productsContainer.appendChild(templateCardProduct);
           }
         });
-        const adminButton = document.querySelector(".admin__button");
-        const passwordInput = document.querySelector(".admin__password");
-        
-        adminButton.addEventListener("click", () => {
-          if (this.#isAdminFlag) {
-            this.#isAdminFlag = false;
-            this.render();
-            passwordInput.style.display = "";
-            adminButton.textContent = "Права администратора";
-          } else {
-            const token = 12345;
-            if (passwordInput.value == token) {
-              console.log("вход в админ панель");
-              ShopService.checkAdministratorRights(token)
-                .then((res) => {
-                  console.log(res);
-                  this.#isAdminFlag = true;
-                  this.render();
-                  passwordInput.style.display = "none";
-                  adminButton.textContent = "Вернуться в режим пользователя";
-                })
-                .catch((err) => {
-                  console.error(err);
-                });
-            } else {
-              console.log("Пароль не верен");
-            }
-          }
-        });
       })
-
       .catch((err) => {
         console.error(err);
       });

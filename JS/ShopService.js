@@ -71,4 +71,3 @@ export default class ShopService {
     });
   }
 }
-//юай рэндер -отвечает за отрисовку//рендер//парсить//локал сторeдж //UIRenderer 
