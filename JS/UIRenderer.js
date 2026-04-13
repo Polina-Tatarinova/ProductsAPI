@@ -4,11 +4,28 @@ export default class UIRenderer {
   constructor() {
     this.#loadAdminState();
     this.#initIsAminLictener();
+    this.#syncAdminUI();
+    this.render();
+  }
+
+  #syncAdminUI() {//подсказал сделать дипсик поскольку были трабля с тем что при перезагрузке флаги не всегда 
+  // меняются + идёт смешивание навешиваемых слушателей событий
+    const adminButton = document.querySelector(".admin__button");
+    const passwordInput = document.querySelector(".admin__password");
+    if (adminButton) {
+      adminButton.textContent = this.#isAdminFlag
+        ? "Вернуться в режим пользователя"
+        : "Права администратора";
+    }
+    if (passwordInput) {
+      passwordInput.style.display = this.#isAdminFlag ? "none" : "";
+    }
   }
 
   #saveAdminState() {
     const adminData = {
       isAdmin: this.#isAdminFlag,
+      expired: Date.now() + 3600000,
     };
     localStorage.setItem("adminState", JSON.stringify(adminData));
   }
@@ -16,11 +33,14 @@ export default class UIRenderer {
   #loadAdminState() {
     const saved = localStorage.getItem("adminState");
     if (saved) {
-      const adminDete = JSON.parse(saved);
-      this.#isAdminFlag = adminDete.isAdmin === true;
-    } else {
-      this.#isAdminFlag = false; 
+      const adminData = JSON.parse(saved);
+      if (adminData.expired > Date.now() && adminData.isAdmin === true) {
+        this.#isAdminFlag = true;
+        return;
+      }
+      localStorage.removeItem("adminState");
     }
+    this.#isAdminFlag = false;
   }
 
   #initAddButton() {
@@ -154,8 +174,10 @@ export default class UIRenderer {
               const id = buyButton.dataset.id;
               ShopService.buyProduct(id)
                 .then(() => {
-                  // const productCardWrapper = buyButton.closest(".product");
-                  
+                  const productCardWrapper = buyButton.closest(".product");
+                  if (productCardWrapper) {
+                    productCardWrapper.remove();
+                  }
                 })
                 .catch((err) => {
                   console.error(err);

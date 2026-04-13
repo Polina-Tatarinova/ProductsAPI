@@ -1,5 +1,15 @@
 import ShopService from "./ShopService.js";
 
+function isAdminSessionValid() {
+  const saved = localStorage.getItem("adminState");
+  const data = JSON.parse(saved);
+  return data.expired > Date.now() && data.isAdmin === true;
+}
+if (!isAdminSessionValid()) {
+  alert("Сессия администратора истекла. Войдите заново.");
+  window.location.href = "../index.html"
+}
+
 const urlParemetr = new URLSearchParams(window.location.search); //это дипсик подсказал, я долго сидела просто с этим
 const productId = urlParemetr.get("id");
 
