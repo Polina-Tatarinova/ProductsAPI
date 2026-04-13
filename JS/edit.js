@@ -28,6 +28,7 @@ const rating = document.querySelector("#rating");
 ShopService.getProducts()
   .then((products) => {
     const product = products.find((prod) => prod.id == productId);//не находит товар по id
+    
     name.value = product.name
     price.value = product.price
     description.value = product.description

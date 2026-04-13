@@ -91,7 +91,7 @@ constructor(){
             adminBtnEdit.dataset.id = product.id;
             adminBtnEdit.addEventListener("click", () => {
               console.log(`Редактирование товара ${product.id}`);
-              window.location.href = "../indexEdit.html?id=${product.id}";
+              window.location.href = `../indexEdit.html?id=${product.id}`;
             });
             const adminBtnDelete = document.createElement("button");
             adminBtnDelete.textContent = "Удалить";
