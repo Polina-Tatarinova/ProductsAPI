@@ -5,7 +5,7 @@ export default class UIRenderer {
   #productsCache = null;
 
   init() {
-    this.#loadAdminStategit commit -m "PTATARINOVA-26: объединённые изменения"();
+    this.#loadAdminState();
     this.#initIsAminLictener();
     this.#syncAdminUI();
     this.render();
