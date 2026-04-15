@@ -1,0 +1,6 @@
+.edit__saveChanges {
+  width: 100px;
+  cursor: pointer;
+  margin-bottom: 7px;
+  background-color: rgb(223, 165, 165);
+}

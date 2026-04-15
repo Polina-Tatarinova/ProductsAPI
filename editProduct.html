@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Редактирование товара</title>
+  <link rel="stylesheet" href="./styles/index.css"> 
+  <script type="module" src="./scripts/edit.js"></script>
+</head>
+<body class = 'body'>
+  <h1 class = 'edit__title'>Редактирование товара</h1>
+  <form id="edit-form" class="edit__form">
+    <label>Название: <input type="text" id="name" required></label>
+    <label>URL изображения: <input type="text" id="imageUrl" required></label>
+    <label>Цена (руб): <input type="number" id="price" required></label>
+    <label>Описание: <textarea id="description" required></textarea></label>
+    <label>Категория: <input type="text" id="category" required></label>
+    <label>Остаток: <input type="number" id="stock" required></label>
+    <label>Рейтинг: <input type="number" step="0.1" id="rating" required></label>
+    <button type="submit" class="edit__saveChanges">Сохранить изменения</button>
+    <button type="button" id="cancel-btn" class="edit__canselBtn">Отмена</button>
+  </form>
+</body>
+</html>

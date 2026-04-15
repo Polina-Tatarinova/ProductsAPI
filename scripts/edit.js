@@ -10,7 +10,7 @@ if (!isAdminSessionValid()) {
   window.location.href = "../index.html"
 }
 
-const urlParemetr = new URLSearchParams(window.location.search); //это дипсик подсказал, я долго сидела просто с этим
+const urlParemetr = new URLSearchParams(window.location.search);
 const productId = urlParemetr.get("id");
 
 const form = document.querySelector("#edit-form");
