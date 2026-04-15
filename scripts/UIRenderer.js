@@ -6,7 +6,7 @@ export default class UIRenderer {
 
   init() {
     this.#loadAdminState();
-    this.#initIsAdminLictener();
+    this.#initIsAdminListener();
     this.#syncAdminUI();
     this.render();
   }
@@ -57,7 +57,7 @@ export default class UIRenderer {
     }
   }
 
-  #initIsAdminLictener() {
+  #initIsAdminListener() {
     const adminButton = document.querySelector(".admin__button");
     const passwordInput = document.querySelector(".admin__password");
 
