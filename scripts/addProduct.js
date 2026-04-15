@@ -2,6 +2,7 @@ import ShopService from "./ShopService.js";
 
 function isAdminSessionValid() {
   const saved = localStorage.getItem("adminState");
+  if (!saved) return false;
   const data = JSON.parse(saved);
   return data.expired > Date.now() && data.isAdmin === true;
 }
@@ -36,12 +37,11 @@ form.addEventListener("submit", async (event) => {
       alert("Товар успешно создан!");
       window.location.href = "../index.html";
     })
-    .catch((err) => {
+    .catch(() => {
       alert("Ошибка создания товара");
-      console.error(err);
     });
 });
 
-document.getElementById("cancel-btn").addEventListener("click", () => {
+document.querySelector("#cancel-btn").addEventListener("click", () => {
   window.location.href = "../index.html"; 
 });

@@ -2,12 +2,13 @@ import ShopService from "./ShopService.js";
 
 function isAdminSessionValid() {
   const saved = localStorage.getItem("adminState");
+  if (!saved) return false;
   const data = JSON.parse(saved);
   return data.expired > Date.now() && data.isAdmin === true;
 }
 if (!isAdminSessionValid()) {
   alert("Сессия администратора истекла. Войдите заново.");
-  window.location.href = "../index.html"
+  window.location.href = "../index.html";
 }
 
 const urlParemetr = new URLSearchParams(window.location.search);
@@ -39,8 +40,8 @@ ShopService.getProducts()
     imageUrl.value = product.imageUrl;
     rating.value = product.rating;
   })
-  .catch((err) => {
-    console.error(err);
+  .catch(() => {
+    alert ("Не удалось получить данные")
   });
 
 form.addEventListener("submit", async (event) => {
@@ -59,8 +60,7 @@ form.addEventListener("submit", async (event) => {
       alert("Товар успешно отредактирован");
       window.location.href = "../index.html";
     })
-    .catch((err) => {
+    .catch(() => {
       alert("Ошибка редактирования товара");
-      console.error(err);
     });
 });

@@ -1,9 +1,12 @@
 export default class ShopService {
   static BASE_URL = "http://localhost:3000";
 
-  static #checkResponseStatus(res, asJson = true) {
+  static async #checkResponseStatus(res, asJson = true) {
     if (!res.ok) {
-      throw `Ошибка: ${res.status} ${res.statusText}`;
+      const errorData = await res.json();
+      const errorMessage =
+        errorData?.errorMessage || `Ошибка: ${res.status} ${res.statusText}`;
+      throw errorMessage;
     }
     return asJson ? res.json() : res.text();
   }
@@ -24,7 +27,7 @@ export default class ShopService {
     const res = await fetch(this.BASE_URL + `/adminPanel`, {
       headers: { token },
     });
-    return this.#checkResponseStatus(res, false); 
+    return this.#checkResponseStatus(res, false);
   }
 
   static async changeProduct(id, body) {

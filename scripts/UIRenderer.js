@@ -6,7 +6,7 @@ export default class UIRenderer {
 
   init() {
     this.#loadAdminState();
-    this.#initIsAminLictener();
+    this.#initIsAdminLictener();
     this.#syncAdminUI();
     this.render();
   }
@@ -57,7 +57,7 @@ export default class UIRenderer {
     }
   }
 
-  #initIsAminLictener() {
+  #initIsAdminLictener() {
     const adminButton = document.querySelector(".admin__button");
     const passwordInput = document.querySelector(".admin__password");
 
@@ -73,16 +73,15 @@ export default class UIRenderer {
         const token = 12345;
         if (passwordInput.value == token) {
           ShopService.checkAdministratorRights(token)
-            .then((res) => {
-              console.log(res);
+            .then(() => {
               this.#isAdminFlag = true;
               this.#saveAdminState();
               this.render();
               passwordInput.style.display = "none";
               adminButton.textContent = "Вернуться в режим пользователя";
             })
-            .catch((err) => {
-              console.error(err);
+            .catch(() => {
+              alert("Не удалось войти");
             });
         } else {
           alert("Пароль не верен");
@@ -114,7 +113,10 @@ export default class UIRenderer {
     card.querySelector(".product__rating").textContent += ` ${product.rating}`;
   }
 
-  #renderProducts(products) {
+  #renderProducts() {
+    const products = this.#productsCache;
+    if (!products) return;
+
     const productsContainer = document.querySelector("#products-list");
     if (!productsContainer) return;
     productsContainer.innerHTML = "";
@@ -143,8 +145,8 @@ export default class UIRenderer {
               this.#productsCache = null;
               this.render();
             })
-            .catch((err) => {
-              console.error(err);
+            .catch(() => {
+              alert("Не удалось удалить товар");
             });
         });
 
@@ -157,8 +159,8 @@ export default class UIRenderer {
               this.#productsCache = null;
               this.render();
             })
-            .catch((err) => {
-              console.error(err);
+            .catch(() => {
+              alert("Не удалось приобрести товар");
             });
         });
         productsContainer.appendChild(card);
@@ -169,16 +171,16 @@ export default class UIRenderer {
 
   render(forceRefresh = false) {
     if (!forceRefresh && this.#productsCache) {
-      this.#renderProducts(this.#productsCache);
+      this.#renderProducts();
       return;
     }
     ShopService.getProducts()
       .then((res) => {
         this.#productsCache = res;
-        this.#renderProducts(res);
+        this.#renderProducts();
       })
-      .catch((err) => {
-        console.error(err);
+      .catch(() => {
+        alert("Не удалось получить данные");
       });
   }
 }
