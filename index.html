@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <title>Интернет-магазин (fetch)</title>
-    <script src="./JS/index.js" type="module"></script>
-    <link rel="stylesheet" href="./css/import.css" />
+    <script src="./scripts/index.js" type="module"></script>
+    <link rel="stylesheet" href="./styles/index.css" />
   </head>
   <body class="body">
     <h1>Интернет-магазин</h1>
@@ -16,23 +16,35 @@
         placeholder="Введите пароль"
         required
       />
-      <button class="admin__button">Права администратора</button>
-      <button id="add-product-btn" class="admin__addЗroductBtn">Добавить товар</button>
+      <button class="admin__button">Войти</button>
+      <button id="add-product-btn" class="admin__addЗroductBtn">
+        Добавить товар
+      </button>
     </div>
 
     <h2>Товары</h2>
-    <div id="products-list" class="productsList">Сервер не доступен</div>
+    <div id="products-list" class="productsList">Сервер недоступен</div>
 
     <template id="product-template">
       <div class="product">
         <h3 class="product__name"></h3>
         <img class="product__image" src="" alt="" />
         <ul class="product__specs">
-          <li class="product__price"><span class="product__text">Цена: </span></li>
-          <li class="product__description"><span class="product__text">Характеристикa: </span></li>
-          <li class="product__category"><span class="product__text">Категория: </span></li>
-          <li class="product__stock"><span class="product__text">Остаток на складе: </span></li>
-          <li class="product__rating"><span class="product__text">Рейтинг: </span></li>
+          <li class="product__price">
+            <span class="product__text">Цена: </span>
+          </li>
+          <li class="product__description">
+            <span class="product__text">Характеристикa: </span>
+          </li>
+          <li class="product__category">
+            <span class="product__text">Категория: </span>
+          </li>
+          <li class="product__stock">
+            <span class="product__text">Остаток на складе: </span>
+          </li>
+          <li class="product__rating">
+            <span class="product__text">Рейтинг: </span>
+          </li>
         </ul>
         <button class="product__button">Купить</button>
       </div>
