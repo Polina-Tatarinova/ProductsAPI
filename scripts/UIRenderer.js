@@ -80,8 +80,8 @@ export default class UIRenderer {
               passwordInput.style.display = "none";
               adminButton.textContent = "Вернуться в режим пользователя";
             })
-            .catch(() => {
-              alert("Не удалось войти");
+            .catch((err) => {
+              alert(err);
             });
         } else {
           alert("Пароль не верен");
@@ -145,8 +145,8 @@ export default class UIRenderer {
               this.#productsCache = null;
               this.render();
             })
-            .catch(() => {
-              alert("Не удалось удалить товар");
+            .catch((err) => {
+              alert(err);
             });
         });
 
@@ -159,8 +159,8 @@ export default class UIRenderer {
               this.#productsCache = null;
               this.render();
             })
-            .catch(() => {
-              alert("Не удалось приобрести товар");
+            .catch((err) => {
+              alert(err);
             });
         });
         productsContainer.appendChild(card);
@@ -179,8 +179,8 @@ export default class UIRenderer {
         this.#productsCache = res;
         this.#renderProducts();
       })
-      .catch(() => {
-        alert("Не удалось получить данные");
+      .catch((err) => {
+        alert(err); 
       });
   }
 }

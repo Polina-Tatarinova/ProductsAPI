@@ -37,8 +37,8 @@ form.addEventListener("submit", async (event) => {
       alert("Товар успешно создан!");
       window.location.href = "../index.html";
     })
-    .catch(() => {
-      alert("Ошибка создания товара");
+    .catch((err) => {
+      alert(err);
     });
 });
 

@@ -11,8 +11,8 @@ if (!isAdminSessionValid()) {
   window.location.href = "../index.html";
 }
 
-const urlParemetr = new URLSearchParams(window.location.search);
-const productId = urlParemetr.get("id");
+const urlParameter = new URLSearchParams(window.location.search);
+const productId = urlParameter.get("id");
 
 const form = document.querySelector("#edit-form");
 
@@ -24,7 +24,7 @@ const category = document.querySelector("#category");
 const stock = document.querySelector("#stock");
 const rating = document.querySelector("#rating");
 
-document.getElementById("cancel-btn").addEventListener("click", () => {
+document.querySelector("#cancel-btn").addEventListener("click", () => {
   window.location.href = "../index.html"; 
 });
 
@@ -40,8 +40,8 @@ ShopService.getProducts()
     imageUrl.value = product.imageUrl;
     rating.value = product.rating;
   })
-  .catch(() => {
-    alert ("Не удалось получить данные")
+  .catch((err) => {
+    alert(err);
   });
 
 form.addEventListener("submit", async (event) => {
@@ -60,7 +60,7 @@ form.addEventListener("submit", async (event) => {
       alert("Товар успешно отредактирован");
       window.location.href = "../index.html";
     })
-    .catch(() => {
-      alert("Ошибка редактирования товара");
+    .catch((err) => {
+      alert(err);
     });
 });
